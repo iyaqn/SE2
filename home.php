@@ -63,7 +63,7 @@ $row = mysqli_fetch_assoc($result);
     <ul>
        <li><a href="home.php">Home  </a></li>
             <li><a href="gallery.html">Gallery  </a></li>
-            <li><a href="">Offers  </a></li>
+            <li><a href="offers.html">Offers  </a></li>
             <li><a href="about.html">About</a></li>
         </ul>
 

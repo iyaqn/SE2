@@ -39,7 +39,7 @@
       
 
       <!--LOGOUT BUTTON-->
-      <a href="link to login page">Log out</a>
+      <a href="login.php">Log out</a>
       </div>
 
 </div>
