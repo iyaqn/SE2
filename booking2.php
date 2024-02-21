@@ -193,31 +193,6 @@ document.getElementById("inclusion-btn").addEventListener("click", function() {
 });
 </script>
 
-<!-- ======= FOOTER ======= -->
-<footer class="footer">
-            <div class="container-footer">
-
-              
-            </div>
-        </footer>
-
- <!--BOOKING MODAL--> <!--should always be at the last page-->
- <div class="bg-modal">
-                        <div class="modal-contents">
-
-                        <div class="close">+</div>
-                        <!--<img src="https://richardmiddleton.me/comic-100.png" alt="">-->
-                        <!--
-                        <form action="">
-                        <input type="text" placeholder="Name">
-                        <input type="email" placeholder="E-Mail">
-                        <a href="#" class="button">Submit</a>
-                        </form>
-                        -->
-
-                        </br>
-                        </div>
-                        </div>
     
       <script src="main.js"></script>
 
