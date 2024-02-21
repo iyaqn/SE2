@@ -26,18 +26,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // If a user was found
     if (mysqli_num_rows($result) === 1) {
-        //Verify input password to database hash password
+        // Verify input password to database hash password
         $row = $result->fetch_array(MYSQLI_ASSOC);
         if (password_verify($password, $row['password'])) {
+            // Set session variables
+            $_SESSION['loggedin'] = true;
+            $_SESSION['email'] = $email;
 
-
-        // Set session variables
-        $_SESSION['loggedin'] = true;
-        $_SESSION['email'] = $email;
-
-        // Redirect to home page
-        header("Location: home.php");
-        exit();
+            // Redirect to home page
+            header("Location: home.php");
+            exit();
+        } else {
+            // Show an error message
+            $error_message = "Invalid username or password.";
+            header("Location: login.php?error=$error_message");
+            exit();
+        }
     } else {
         // Show an error message
         $error_message = "Invalid username or password.";
@@ -45,6 +49,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 }
-}
-
 ?>

@@ -1,4 +1,31 @@
+<?php
+// Start a session
+session_start();
 
+// If the user is not logged in, redirect to the login page
+if (!isset($_SESSION['loggedin'])) {
+  header("Location: login.php");
+  exit();
+}
+
+// Connect to MySQL
+$host = "localhost";
+$user = "root";
+$password = "";
+$database = "login_db";
+
+$conn = mysqli_connect($host, $user, $password, $database);
+
+// Check connection
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+$email = $_SESSION['email'];
+$sql = "SELECT * FROM user WHERE email_address = '$email'";
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_assoc($result);
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -140,8 +167,3 @@
     
 </body>
 </html>
-      
-     
-      
-
-

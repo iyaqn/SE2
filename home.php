@@ -80,36 +80,14 @@ $row = mysqli_fetch_assoc($result);
       <!--LOGOUT BUTTON-->
       <a href="login.php">Log out</a>
       </div>
-
       
-      
-     
-      
-
 </div>
    </header>
-
    <body class="body-home">
    <section class="hero">
 	<div class="hero-content">
-
-
- 
-
-		
-		
 	</div>
 </section>
-
-
-   
-      
- 
-    
-
-      
-
-
  <footer class="footer">
             <div class="container-footer">
 
@@ -132,7 +110,8 @@ $row = mysqli_fetch_assoc($result);
                         <h2>Enter Date </h2>
                         <form action = "booking1.php" method = "POST">
                         <label for = "date_start">Start Date:</label>
-                        <input type = "date" name = "date_start" id = "date_start"  required> <br><br>
+                        <input type = "date" name = "date_start" id = "date_start" min="<?php echo date("Y-m-d"); ?>"  required> 
+<br><br>
                         <label for = "date_end">End Date:</label>
                         <input type = "date" name = "date_end" id = "date_end" required><br><br>
                         <input type = "submit" value = "Proceed">
@@ -143,11 +122,25 @@ $row = mysqli_fetch_assoc($result);
 
 </br>
                         <a href="booking1.php" class="button">BOOK</a>
-
+<?
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $_SESSION["start_date"] = $_POST["date_start"];
+  $_SESSION["end_date"] = $_POST["date_end"];
+  
+  header("Location: payment.php");
+  exit();
+}
+?>
                         </div>
                         </div>
     
       <!--JS RESOURCE-->
+      <script>
+        document.getElementById('date_start').addEventListener('input', function () {
+            var startDate = this.value;
+            document.getElementById('date_end').min = startDate;
+        });
+    </script>
       <script src="main.js"></script>
 
 
