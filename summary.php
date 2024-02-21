@@ -1,3 +1,44 @@
+<?php
+// Start a session
+session_start();
+
+// If the user is not logged in, redirect to the login page
+if (!isset($_SESSION['loggedin'])) {
+  header("Location: login.php");
+  exit();
+}
+
+// Connect to MySQL
+$host = "localhost";
+$user = "root";
+$password = "";
+$database = "login_db";
+
+$conn = mysqli_connect($host, $user, $password, $database);
+
+// Check connection
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+$email = $_SESSION['email'];
+$sql = "SELECT * FROM user WHERE email_address = '$email'";
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_assoc($result);
+
+$button_value = isset($_SESSION['button_value']) ? $_SESSION['button_value'] : "No chosen package";
+$packageprice = isset($_POST['packageprice']) ? $_POST['packageprice'] : 0;
+$data_price = isset($_POST['data_price']) ? $_POST['data_price'] : 0;
+$selected_addons = isset($_POST['selected_addons']) ? $_POST['selected_addons'] : [];
+
+// Store values in session variables
+$_SESSION['packageprice'] = $packageprice;
+$_SESSION['data_price'] = $data_price;
+$_SESSION['selected_addons'] = $selected_addons;
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -31,30 +72,22 @@
 
    <div class="mainNav">
 
-    <!--WEBSITE PAGES-->
-    <ul>
+<!--WEBSITE PAGES-->
+<ul>
        <li><a href="home.php">Home  </a></li>
-            <li><a href="gallery.html">Gallery  </a></li>
-            <li><a href="offers.html">Offers  </a></li>
-            <li><a href="about.html">About</a></li>
+            <li><a href="gallery.php">Gallery  </a></li>
+            <li><a href="offers.php">Offers  </a></li>
+            <li><a href="about.php">About</a></li>
         </ul>
 
-            <!-- BRAND LOGO-->
-            <a href="home.php">
-                 <div id="logo">VILLA DELOS REYES  <!--TEXT LOGO-->
-               <!--<img src="assets/img/logo2.png" alt=""> -->    <!--IMAGE LOGO-->
-                </div>
-               </a> 
     
 
     
       <div class="button-container">
-
-      <!--BOOK BUTTON-->
-      <a href="#" id="button" class="button">Book Now</a>
+      <label style="color:white;">Hi, <?php echo $row['first_name']; ?></label>
 
       <!--LOGOUT BUTTON-->
-      <a href="link to login page">Log out</a>
+      <a href="login.php">Log out</a>
       </div>
 
 </div>
@@ -64,22 +97,47 @@
     <div class="payment-content">
 
     <div id="receipt">
-        <h1> Thank you! You're Already Reserved, User Name</h1>
-        <p>Name:</p>
-        <p>Booking Number:</p>
-        <p>Reservation Date:</p>
-        <p>Package:</p>
-        <p>Add-Ons:</p>
+        <h1> Thank you! You're Already Reserved, <?php echo $row['first_name']; ?>!</h1>
+        <p>Name: <?php echo $row['first_name']; ?> <?php echo $row['last_name']; ?></p>
+        <p>Booking Number: <??></p>
+        <p>Reservation Date:<??> </p>
+        <p>Package: <?php
+//from booking1
+if (isset($_SESSION['button_value'])) {
+    $valueofbutton = $_SESSION['button_value'];
+    echo $valueofbutton;
+} else {
+    echo "No chosen package";
+}
+?>
+</p>
+<p>Add-Ons: 
+    <?php
+    if (!empty($selected_addons)) {
+        echo "<br>You chose the following add-on(s):<br>";
+        foreach ($selected_addons as $addOn) {
+            echo $addOn . "<br>";
+        }
+    } else {
+        echo "You did not choose any add-on(s).";
+    }
+    ?>
+</p>
         <hr>
-        Total Due:
+        Total Due: <?php
+        // Retrieve values from the session
+        $packageprice = isset($_SESSION['packageprice']) ? $_SESSION['packageprice'] : 0;
+        $data_price = isset($_SESSION['data_price']) ? $_SESSION['data_price'] : 0;
+
+        // Calculate the total price
+        $totalPrice = $packageprice + $data_price;
+        echo $totalPrice;
+        ?>
         <hr>
         <hr>
+
     
-
-    <p>PAID</p>
-
-    <p> Go back to Home Page </p>
-    <a href="home.php">VILLA DELOS REYES</a>
+    <a href="home.php"><p style="color: blue;"> Go back to Home Page </p></a>
 </div>
     
 

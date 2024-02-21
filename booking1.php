@@ -59,19 +59,17 @@ $row = mysqli_fetch_assoc($result);
     <!--WEBSITE PAGES-->
     <ul>
        <li><a href="home.php">Home  </a></li>
-            <li><a href="gallery.html">Gallery  </a></li>
-            <li><a href="">Offers  </a></li>
-            <li><a href="">About</a></li>
+            <li><a href="gallery.php">Gallery  </a></li>
+            <li><a href="offers.php">Offers  </a></li>
+            <li><a href="about.php">About</a></li>
         </ul>
-
 
     
 
     
       <div class="button-container">
 
-      <!--BOOK BUTTON-->
-
+      <label style="color:white;">Hi, <?php echo $row['first_name']; ?></label>
 
       <!--LOGOUT BUTTON-->
       <a href="login.php">Log out</a>
@@ -94,11 +92,13 @@ $row = mysqli_fetch_assoc($result);
 
       <div class="card-space">
       <div class="card">
-      <img src="p1.png" alt="Pacakage 1" style="width:100%">
+      <img src="p1.png" alt="Package 1" style="width:100%">
       <div class="container">
       <h4><b>Day Stay</b></h4>
       <h3>15 000</h3>
-      <button class="card-button"><a href="booking2.php"> Select</a></button>
+      <form method="post" action="booking2.php">
+        <input class="card-button" type="submit" name="package1" value="Select" />
+      </form>
       </div>
       </div>
       </div>
@@ -111,7 +111,9 @@ $row = mysqli_fetch_assoc($result);
       <div class="container">
       <h4><b>Night Stay</b></h4>
       <h3>18 000</h3>
-      <button class="card-button"><a href="booking2.php"> Select</a></button>
+      <form method="post" action="booking2.php">
+        <input class="card-button" type="submit" name="package2" value="Select" />
+      </form>    
       </div>
       </div>
       </div>
@@ -123,7 +125,9 @@ $row = mysqli_fetch_assoc($result);
       <div class="container">
       <h4><b>Overnight Stay</b></h4>
       <h3>25 000</h3>
-      <button class="card-button"><a href="booking2.php"> Select</a></button>
+      <form method="post" action="booking2.php">
+        <input class="card-button" type="submit" name="package3" value="Select" />
+      </form>
       </div>
       </div>
       </div>
@@ -152,7 +156,7 @@ $row = mysqli_fetch_assoc($result);
                         </form>
                         -->
 
-                        CALENDAR
+                        <!-- CALENDAR -->
                         
 
 </br>
@@ -162,8 +166,5 @@ $row = mysqli_fetch_assoc($result);
                         </div>
     
       <script src="main.js"></script>
-
-
-    
 </body>
 </html>

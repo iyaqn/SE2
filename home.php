@@ -62,9 +62,9 @@ $row = mysqli_fetch_assoc($result);
     <!--WEBSITE PAGES-->
     <ul>
        <li><a href="home.php">Home  </a></li>
-            <li><a href="gallery.html">Gallery  </a></li>
-            <li><a href="offers.html">Offers  </a></li>
-            <li><a href="about.html">About</a></li>
+            <li><a href="gallery.php">Gallery  </a></li>
+            <li><a href="offers.php">Offers  </a></li>
+            <li><a href="about.php">About</a></li>
         </ul>
 
     
@@ -88,7 +88,7 @@ $row = mysqli_fetch_assoc($result);
 	<div class="hero-content">
 	</div>
 </section>
- <footer class="footer">
+ <!-- <footer class="footer">
             <div class="container-footer">
 
                CONTACT DETAILS 
@@ -96,7 +96,7 @@ $row = mysqli_fetch_assoc($result);
                NAMES
                SOCIAL MEDIA BUTTON
             </div>
-        </footer>
+        </footer> -->
 
 
 
@@ -104,41 +104,28 @@ $row = mysqli_fetch_assoc($result);
  <div class="bg-modal">
                         <div class="modal-contents">
 
-                        <div class="close">+</div>
+                        <div class="close">x</div>
                         
                         <div class = "Date_container">
-                        <h2>Enter Date </h2>
-                        <form action = "booking1.php" method = "POST">
-                        <label for = "date_start">Start Date:</label>
-                        <input type = "date" name = "date_start" id = "date_start" min="<?php echo date("Y-m-d"); ?>"  required> 
-<br><br>
-                        <label for = "date_end">End Date:</label>
-                        <input type = "date" name = "date_end" id = "date_end" required><br><br>
-                        <input type = "submit" value = "Proceed">
-
+                        <h2>Enter Date: </h2>
+                        <form action="booking1.php" method="POST">
+                        <input type="date" name="start_date" id="start_date" min="<?php echo date("Y-m-d"); ?>" required>
+                        <br><br>
+                        <input type="date" name="end_date" id="end_date" required>
+                        <br><br>
+                        <button type="submit" value="submit">Proceed</button>
                         </form>
                         </div>
                         
-
 </br>
-                        <a href="booking1.php" class="button">BOOK</a>
-<?
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $_SESSION["start_date"] = $_POST["date_start"];
-  $_SESSION["end_date"] = $_POST["date_end"];
-  
-  header("Location: payment.php");
-  exit();
-}
-?>
                         </div>
                         </div>
     
       <!--JS RESOURCE-->
       <script>
-        document.getElementById('date_start').addEventListener('input', function () {
+        document.getElementById('start_date').addEventListener('input', function () {
             var startDate = this.value;
-            document.getElementById('date_end').min = startDate;
+            document.getElementById('end_date').min = startDate;
         });
     </script>
       <script src="main.js"></script>

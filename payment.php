@@ -1,30 +1,52 @@
 <?php
-// Start a session
 session_start();
 
-// If the user is not logged in, redirect to the login page
+// include('db_connection.php');
+// $user_email = $_SESSION['email'];
+
+// // Retrieve booking information from the database
+// $sql = "SELECT * FROM bookings WHERE user_email = ? AND payment_status = 0";
+// $stmt = $conn->prepare($sql);
+// $stmt->bind_param("s", $user_email);
+// $stmt->execute();
+// $result = $stmt->get_result();
+
+// // Check if a booking exists
+// if ($result->num_rows == 1) {
+//     $booking = $result->fetch_assoc();
+//     $start_date = $booking['start_date'];
+//     $end_date = $booking['end_date'];
+// } else {
+//     // Handle the case where no booking is found
+//     echo "Error: Booking not found.";
+//     // You might want to redirect the user or handle this differently based on your requirements
+//     exit();
+// }
+
 if (!isset($_SESSION['loggedin'])) {
-  header("Location: login.php");
-  exit();
-}
-
-// Connect to MySQL
-$host = "localhost";
-$user = "root";
-$password = "";
-$database = "login_db";
-
-$conn = mysqli_connect($host, $user, $password, $database);
-
-// Check connection
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
-}
-
-$email = $_SESSION['email'];
-$sql = "SELECT * FROM user WHERE email_address = '$email'";
-$result = mysqli_query($conn, $sql);
-$row = mysqli_fetch_assoc($result);
+    header("Location: login.php");
+    exit();
+  }
+  
+  // Connect to MySQL
+  $host = "localhost";
+  $user = "root";
+  $password = "";
+  $database = "login_db";
+  
+  $conn = mysqli_connect($host, $user, $password, $database);
+  
+  // Check connection
+  if (!$conn) {
+      die("Connection failed: " . mysqli_connect_error());
+  }
+  
+  $email = $_SESSION['email'];
+  $sql = "SELECT * FROM user WHERE email_address = '$email'";
+  $result = mysqli_query($conn, $sql);
+  $row = mysqli_fetch_assoc($result);
+  
+  
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -53,18 +75,19 @@ $row = mysqli_fetch_assoc($result);
 
    <div class="mainNav">
 
-    <!--WEBSITE PAGES-->
-    <ul>
+        <!--WEBSITE PAGES-->
+        <ul>
        <li><a href="home.php">Home  </a></li>
-            <li><a href="gallery.html">Gallery  </a></li>
-            <li><a href="offers.html">Offers  </a></li>
-            <li><a href="about.html">About</a></li>
+            <li><a href="gallery.php">Gallery  </a></li>
+            <li><a href="offers.php">Offers  </a></li>
+            <li><a href="about.php">About</a></li>
         </ul>
 
     
-      <div class="button-container">
 
-      
+    
+      <div class="button-container">
+      <label style="color:white;">Hi, <?php echo $row['first_name']; ?></label>
 
       <!--LOGOUT BUTTON-->
       <a href="login.php">Log out</a>
@@ -79,30 +102,66 @@ $row = mysqli_fetch_assoc($result);
     <div id="payment-card">
         <p>Name: <?php echo $row['first_name']; ?> <?php echo $row['last_name']; ?></p>
         <p>Reservation Date: <?php echo $start_date; ?> to <?php echo $end_date; ?></p>
-        <p>Package:</p>
+        <p>Package: 
+        <?php
+//from booking1
+if (isset($_SESSION['button_value'])) {
+    $valueofbutton = $_SESSION['button_value'];
+    echo $valueofbutton;
+} else {
+    echo "No chosen package";
+}
+//from booking2
+$name = $_GET['addOn'];
+
+if (isset($_GET['addOn'])) {
+    echo "<br> You chose the following add on(s): <br>";
+
+    foreach ($name as $addOn){
+        echo $addOn."<br />";
+    }
+} else {
+    echo "You did not choose any add on(s).";
+}
+
+?>
+        </p>
         <hr>
         Total Due:
+        <?php
+        // Retrieve values from the session
+        $packageprice = isset($_SESSION['packageprice']) ? $_SESSION['packageprice'] : 0;
+        $data_price = isset($_SESSION['data_price']) ? $_SESSION['data_price'] : 0;
+
+        // Calculate the total price
+        $totalPrice = $packageprice + $data_price;
+        echo $totalPrice;
+        ?>
         <hr>
         <hr>
     
-
-    <form action=" " method="post">
-    <div>
-        <input type="card-name" id="card-name" name="card-name" placeholder="Card Name" />
+        <img src="samplepayment.jpg"
+        style="
+        width: 50%; 
+        height: auto;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;"> 
+    <form action="summary.php">
+    <div style="background-color: white; width: 50%; display: block;
+        margin-left: auto;
+        margin-right: auto;">
+        <label for="ProofofPayment"> Proof of Payment: 
+    <input type="file" id="paymentProof" name="paymentProof" accept="image/png, image/gif, image/jpeg"  required>
+    </label>
     </div>
 
     <div>
-        <input type="card-number" id="card-number" name="card-number" placeholder="Card Number" />
+        <input type="number" id="referencenum" name="referencenum" placeholder="Reference Number" required/>
     </div>
 
     <div>
-        
-        <input type="card-ed" id="card-ed" name="card-ed" placeholder="MM/YY" />
-    </div>
-
-    <div>
-        <input type="card-cvv" id="card-cvv" name="CVV" placeholder="CVV" />
-    </div>
+    <input type = "date" name = "paymentDate" id = "paymentDate" min="<?php echo date("Y-m-d"); ?>"  required>     </div>
 
     <button type="submit" id="payment-btn"> <a href="summary.php">Proceed </a></button>
 </form>
@@ -122,7 +181,7 @@ $row = mysqli_fetch_assoc($result);
                         <div class="close">+</div>
             
 
-                        CALENDAR
+                        <!-- CALENDAR -->
                         
 
 </br>

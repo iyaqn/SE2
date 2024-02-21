@@ -1,3 +1,31 @@
+<?php
+// Start a session
+session_start();
+
+// If the user is not logged in, redirect to the login page
+if (!isset($_SESSION['loggedin'])) {
+  header("Location: login.php");
+  exit();
+}
+
+// Connect to MySQL
+$host = "localhost";
+$user = "root";
+$password = "";
+$database = "login_db";
+
+$conn = mysqli_connect($host, $user, $password, $database);
+
+// Check connection
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+$email = $_SESSION['email'];
+$sql = "SELECT * FROM user WHERE email_address = '$email'";
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_assoc($result);
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -93,9 +121,9 @@
         <!--WEBSITE PAGES-->
         <ul>
            <li><a href="home.php">Home  </a></li>
-           <li><a href="gallery.html">Gallery  </a></li>
-           <li><a href="offers.html">Offers  </a></li>
-           <li><a href="about.html">About</a></li>
+           <li><a href="gallery.php">Gallery  </a></li>
+           <li><a href="offers.php">Offers  </a></li>
+           <li><a href="about.php">About</a></li>
        </ul>
  
        <div class="button-checkbox-container">
@@ -171,7 +199,7 @@
     </div>
   </div>
     <!-- ======= FOOTER ======= -->
-<footer class="footer">
+<!-- <footer class="footer">
     <div class="checkbox-container-footer">
 
        CONTACT DETAILS 
@@ -179,27 +207,38 @@
        NAMES
        SOCIAL MEDIA BUTTON
     </div>
-</footer>
+</footer> -->
 
 <!--BOOKING MODAL--> <!--should always be at the last page-->
 <div class="bg-modal">
-                <div class="modal-contents">
+                        <div class="modal-contents">
 
-                <div class="close">+</div>
-                <!--<img src="https://richardmiddleton.me/comic-100.png" alt="">-->
-                <!--
-                <form action="">
-                <input type="text" placeholder="Name">
-                <input type="email" placeholder="E-Mail">
-                <a href="#" class="button">Submit</a>
-                </form>
-                -->
-
-                CALENDAR
+                        <div class="close">x</div>
+                        
+                        <div class = "Date_container">
+                        <h2>Enter Date: </h2>
+                        <form action="booking1.php" method="POST">
+                        <input type="date" name="start_date" id="start_date" min="<?php echo date("Y-m-d"); ?>" required>
+                        <br><br>
+                        <input type="date" name="end_date" id="end_date" required>
+                        <br><br>
+                        <button type="submit" value="submit">Proceed</button>
+                        </form>
+                        </div>
+                        
+</br>
+                        </div>
+                        </div>
                 
 
-</br>
-                <a href="booking1.php" class="button">BOOK</a>
+      <!--JS RESOURCE-->
+      <script>
+        document.getElementById('start_date').addEventListener('input', function () {
+            var startDate = this.value;
+            document.getElementById('end_date').min = startDate;
+        });
+    </script>
+      <script src="main.js"></script>
 
                 </div>
                 </div>
