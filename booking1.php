@@ -139,31 +139,6 @@ $row = mysqli_fetch_assoc($result);
 		
 	</div>
 </section>
-
-
-
- <!--BOOKING--> <!--should always be at the last page-->
- <div class="bg-modal">
-                        <div class="modal-contents">
-
-                        <div class="close">+</div>
-                        <!--<img src="https://richardmiddleton.me/comic-100.png" alt="">-->
-                        <!--
-                        <form action="">
-                        <input type="text" placeholder="Name">
-                        <input type="email" placeholder="E-Mail">
-                        <a href="#" class="button">Submit</a>
-                        </form>
-                        -->
-
-                        <!-- CALENDAR -->
-                        
-
-</br>
-                        <a href="booking1.php" class="button">BOOK</a>
-
-                        </div>
-                        </div>
     
       <script src="main.js"></script>
 </body>
