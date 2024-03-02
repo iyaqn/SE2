@@ -12,6 +12,7 @@ integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhnd0JK28an
 crossorigin="anonymous">
     <link href="loginpage.css" rel="stylesheet" />
 </head>
+
 <body>
 <div class="container" id="container">
 	<div class="form-container sign-up-container">
