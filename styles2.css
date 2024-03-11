@@ -83,27 +83,22 @@ header {
 }
 
 .mainNav {
-  display: flex;
-  padding: 0 15px;
-  max-width: 1240px;
-  height: 60px;
-  width: 100%;
-  margin: 0 auto;
-  justify-content: space-between;
-  align-items: center;
-  /*background-color: yellow;*/
+  overflow: hidden;
+  background-color: #3d3d3d;
   font-family: "Open Sans", sans-serif;
   text-decoration: none;
   font-size: 22px;
 }
 
-a {
+.mainNav a {
   text-decoration: none;
   color: rgb(255, 255, 255);
 }
 
-ul {
-  list-style: none;
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
 }
 
 li {
@@ -115,7 +110,6 @@ li {
 }
 
 .button-container {
-  background-color: transparent;
   display: flex;
   column-gap: 10px;
   justify-content: space-between;

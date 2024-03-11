@@ -1,28 +1,72 @@
+<?php
+// Start a session
+session_start();
+
+// If the user is not logged in, redirect to the login page
+if (!isset($_SESSION['loggedin'])) {
+  header("Location: login.php");
+  exit();
+}
+
+// Connect to MySQL
+$host = "localhost";
+$user = "root";
+$password = "";
+$database = "login_db";
+
+$conn = mysqli_connect($host, $user, $password, $database);
+
+// Check connection
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+$email = $_SESSION['email'];
+$sql = "SELECT * FROM user WHERE email_address = '$email'";
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_assoc($result);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/css/styles3.css" rel="stylesheet" />
+    <link href="styles3.css" rel="stylesheet" />
     <title>Feedback Page</title>
 </head>
    <!--  NAVIGATION BAR -->
    <header class="page-header">
    <div class="mainNav">
-    <!--WEBSITE PAGES-->
-    <ul>
-       <li><a href="home.php">Home  </a></li>
-            <li><a href="gallery.php">Gallery  </a></li>
-            <li><a href="offers.php">Offers  </a></li>
-            <li><a href="about.php">About</a></li>
-        </ul>
-      <div class="button-container"> 
-      <label style="color:white;">Hi, <?php echo $row['first_name']; ?></label>
-      <!--LOGOUT BUTTON-->
-      <a href="login.php">Log out</a>
-      </div>
+     
+        <!--WEBSITE PAGES-->
+        <ul>
+           <li><a href="home.php">Home  </a></li>
+           <li><a href="gallery.php">Gallery  </a></li>
+           <li><a href="offers.php">Offers  </a></li>
+           <li><a href="about.php">About</a></li>
+           <li><a href="viewfeedbacks.php">Feedbacks</a></li>
+       </ul>
+ 
+       <div class="button-checkbox-container">
+        <!-- BRAND LOGO-->
+        <a href="home.php">
+          <div class="logo">VILLA DELOS REYES  
+         </div>
+         <!-- TEXT LOGO
+        <img src="logo2.png" alt="">   
+         IMAGE LOGO -->
+        </a> 
+        </div>
+       <div class="button-container">
 
-</div>
+        <!--BOOK BUTTON-->
+        <a href="#" id="button" class="button">Book Now</a>
+
+  
+        <!--LOGOUT BUTTON-->
+        <a href="login.php">Log out</a>
+        </div>
+
    </header>
 <body>
 <div class="feedback-box">

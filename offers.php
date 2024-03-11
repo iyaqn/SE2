@@ -124,6 +124,7 @@ $row = mysqli_fetch_assoc($result);
            <li><a href="gallery.php">Gallery  </a></li>
            <li><a href="offers.php">Offers  </a></li>
            <li><a href="about.php">About</a></li>
+           <li><a href="viewfeedbacks.php">Feedbacks</a></li>
        </ul>
  
        <div class="button-checkbox-container">
